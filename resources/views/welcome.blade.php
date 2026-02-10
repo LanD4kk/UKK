@@ -5,12 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>S-Patch - Facility Complaint</title>
     
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/js/tailwind.min.js"></script>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/google-fonts.css" rel="stylesheet"/>
+    <link href="/css/material-symbols.css" rel="stylesheet"/>
     
     <script>
         tailwind.config = {
@@ -53,9 +51,8 @@
             </nav>
 
             <div class="flex items-center gap-4">
-                <a class="text-sm font-bold text-primary hover:underline hidden lg:block" href="/admin/login">Admin Login</a>
-                <a href="/student/login" class="flex min-w-[120px] items-center justify-center rounded-lg h-10 px-6 border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white transition-all text-sm font-bold">
-                    <span>Login Siswa</span>
+                <a href="/login" class="flex min-w-[120px] items-center justify-center rounded-lg h-10 px-6 border-2 border-primary text-primary bg-white hover:bg-primary hover:text-white transition-all text-sm font-bold">
+                    <span>Login</span>
                 </a>
             </div>
         </div>

@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/fonts/lexend-300.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/lexend-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/lexend-500.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/lexend-600.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/lexend-700.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/lexend-800.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(/fonts/notosans-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(/fonts/notosans-700.ttf) format('truetype');
+}

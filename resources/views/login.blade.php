@@ -5,12 +5,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Login Portal - SMKN 4 Tangerang</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/google-fonts.css" rel="stylesheet"/>
+    <link href="/css/material-symbols.css" rel="stylesheet"/>
     
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/js/tailwind.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -119,12 +117,12 @@
                     </div>
 
                     <div id="form-siswa" class="tab-content active">
-                        <form action="{{ url('/student/login') }}" method="POST" class="space-y-5">
+                        <div class="space-y-5">
                             <div class="space-y-1.5">
                                 <label class="text-xs font-bold uppercase text-slate-500 tracking-wider ml-1">Nomor Induk Siswa</label>
                                 <div class="relative group">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">badge</span>
-                                    <input type="text" name="nis" placeholder="Contoh: 212210050" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium" required>
+                                    <input type="text" name="nis" placeholder="Contoh: 212210050" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium">
                                 </div>
                             </div>
 
@@ -134,15 +132,15 @@
                                 </div>
                                 <div class="relative group">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
-                                    <input type="password" name="password" placeholder="••••••••" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium" required>
+                                    <input type="password" name="password" placeholder="••••••••" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-medium">
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group">
+                            <button onclick="window.location.href='/student/dashboard'" type="button" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group">
                                 <span>Masuk Sekarang</span>
                                 <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
                             </button>
-                        </form>
+                        </div>
                         
                         <div class="mt-6 text-center">
                             <p class="text-xs text-slate-400">
@@ -152,12 +150,12 @@
                     </div>
 
                     <div id="form-staff" class="tab-content">
-                        <form action="{{ url('/admin/login') }}" method="POST" class="space-y-5">
+                        <div class="space-y-5">
                             <div class="space-y-1.5">
                                 <label class="text-xs font-bold uppercase text-slate-500 tracking-wider ml-1">Username / NIP</label>
                                 <div class="relative group">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-600 transition-colors">person</span>
-                                    <input type="text" name="username" placeholder="Masukkan username admin" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all outline-none font-medium" required>
+                                    <input type="text" name="username" placeholder="Masukkan username admin" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all outline-none font-medium">
                                 </div>
                             </div>
 
@@ -168,15 +166,15 @@
                                 </div>
                                 <div class="relative group">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-600 transition-colors">key</span>
-                                    <input type="password" name="password" placeholder="••••••••" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all outline-none font-medium" required>
+                                    <input type="password" name="password" placeholder="••••••••" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all outline-none font-medium">
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
+                            <button onclick="window.location.href='/admin/dashboard'" type="button" class="w-full bg-slate-800 hover:bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
                                 <span>Login Portal Admin</span>
                                 <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">dataset</span>
                             </button>
-                        </form>
+                        </div>
                         
                         <div class="mt-6 text-center">
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 text-yellow-700 text-[10px] font-bold border border-yellow-100">

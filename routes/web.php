@@ -6,8 +6,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/login', function () {
-    return view('admin-login');
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
+});
+
+Route::get('/student/create-report', function () {
+    return view('student.create-report');
+});
+
+Route::get('/student/report/{id}', function ($id) {
+    return view('student.report-detail');
 });
 
 Route::get('/admin/dashboard', function () {
@@ -24,8 +36,4 @@ Route::get('/admin/categories', function () {
 
 Route::get('/admin/aspirations', function () {
     return view('admin.aspiration-management');
-});
-
-Route::get('/student/login', function () {
-    return view('student-login');
 });

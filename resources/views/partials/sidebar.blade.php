@@ -28,31 +28,10 @@
         <span class="material-symbols-outlined">inbox</span>
         <span class="text-sm font-medium">Manajemen Aspirasi</span>
     </a>
-
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hover:text-blue-600" href="#">
-        <span class="material-symbols-outlined">report_problem</span>
-        <span class="text-sm font-medium">Complaints</span>
-    </a>
-
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hover:text-blue-600" href="#">
-        <span class="material-symbols-outlined">apartment</span>
-        <span class="text-sm font-medium">Facilities</span>
-    </a>
-
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hover:text-blue-600" href="#">
-        <span class="material-symbols-outlined">group</span>
-        <span class="text-sm font-medium">Users</span>
-    </a>
-
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors hover:text-blue-600" href="#">
-        <span class="material-symbols-outlined">bar_chart</span>
-        <span class="text-sm font-medium">Reports</span>
-    </a>
 </nav>
 
 <div class="p-4 mt-auto">
     <button class="w-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl py-3 px-4 flex items-center justify-center gap-2 text-sm font-semibold hover:opacity-90 transition-opacity shadow-md">
-        <span class="material-symbols-outlined text-sm">add</span>
-        New Report
+        <a href="/">Logout</a>
     </button>
 </div>
