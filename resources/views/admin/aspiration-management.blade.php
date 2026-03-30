@@ -115,7 +115,7 @@
                         @endif
                     </td>
                     <td class="px-6 py-5 text-center">
-                        <button class="text-blue-600 hover:underline text-sm font-bold">Detail</button>
+                        <a href="{{ route('admin.aspirations.show', $aspiration->complaint_id) }}" class="text-blue-600 hover:underline text-sm font-bold">Detail</a>
                     </td>
                 </tr>
                 @empty
