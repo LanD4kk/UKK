@@ -33,24 +33,50 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
+        /* Skeleton loading animation */
+        .skeleton {
+            background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.5rem;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Fade in animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeInUp 0.4s ease both; }
+        .fade-in-delay-1 { animation: fadeInUp 0.4s 0.1s ease both; }
+        .fade-in-delay-2 { animation: fadeInUp 0.4s 0.2s ease both; }
+        .fade-in-delay-3 { animation: fadeInUp 0.4s 0.3s ease both; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark min-h-screen font-display">
 
+    <!-- Header -->
     <header class="sticky top-0 z-50 w-full bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
-                    <!-- Logo Image -->
                     <img src="/img/logo.png" alt="S-Patch Logo" class="h-10 w-auto object-contain" />
                 </div>
                 <div class="flex items-center gap-4">
+                    <!-- User Info (diisi dari API) -->
                     <div class="hidden md:flex flex-col items-end">
-                        <span class="text-sm font-semibold text-gray-900 dark:text-white">Ahmad Rizki</span>
+                        <span id="header-name" class="text-sm font-semibold text-gray-900 dark:text-white">
+                            <span class="skeleton inline-block w-28 h-4 rounded">&nbsp;</span>
+                        </span>
                         <span class="text-xs text-gray-500 dark:text-gray-400">Siswa SMKN 4 Tangerang</span>
                     </div>
-                    <div class="h-10 w-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center overflow-hidden">
-                        <img alt="Ahmad Profile" src="https://ui-avatars.com/api/?name=Ahmad+Rizki&background=135bec&color=fff" class="w-full h-full object-cover"/>
+                    <!-- Avatar (diisi dari API) -->
+                    <div id="header-avatar" class="h-10 w-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center overflow-hidden">
+                        <span class="skeleton w-full h-full rounded-full inline-block">&nbsp;</span>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -65,33 +91,40 @@
     </header>
 
     <main class="max-w-[1200px] mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        
-        <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:p-12 mb-8 shadow-xl shadow-primary/20">
+
+        <!-- Hero Banner Skeleton → diisi API -->
+        <div id="hero-section" class="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:p-12 mb-8 shadow-xl shadow-primary/20">
             <div class="absolute right-[-20px] top-[-20px] opacity-10">
                 <span class="material-symbols-outlined !text-[200px]">assignment</span>
             </div>
             <div class="relative z-10">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Selamat Datang, Ahmad Rizki</h2>
+                <h2 id="hero-greeting" class="text-3xl md:text-4xl font-extrabold text-white mb-2">
+                    <span class="skeleton inline-block w-64 h-9 rounded">&nbsp;</span>
+                </h2>
                 <div class="flex flex-wrap items-center gap-4 text-blue-100">
-                    <div class="flex items-center gap-1">
+                    <div id="hero-nis" class="flex items-center gap-1">
                         <span class="material-symbols-outlined text-sm">badge</span>
-                        <span class="text-sm md:text-base">NIS: 212210345</span>
+                        <span class="skeleton inline-block w-32 h-4 rounded">&nbsp;</span>
                     </div>
                     <div class="w-1 h-1 bg-blue-300 rounded-full"></div>
-                    <div class="flex items-center gap-1">
+                    <div id="hero-class" class="flex items-center gap-1">
                         <span class="material-symbols-outlined text-sm">school</span>
-                        <span class="text-sm md:text-base">Kelas: XII RPL 1</span>
+                        <span class="skeleton inline-block w-28 h-4 rounded">&nbsp;</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+            <!-- Total Laporan -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500 dark:text-gray-400 font-medium mb-1">Total Laporan</p>
-                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white">5</h3>
+                        <h3 id="stat-total" class="text-3xl font-bold text-gray-900 dark:text-white">
+                            <span class="skeleton inline-block w-10 h-8 rounded">&nbsp;</span>
+                        </h3>
                     </div>
                     <div class="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
                         <span class="material-symbols-outlined text-gray-600 dark:text-gray-300">description</span>
@@ -99,11 +132,14 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+            <!-- Dalam Proses -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-1">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500 dark:text-gray-400 font-medium mb-1">Dalam Proses</p>
-                        <h3 class="text-3xl font-bold text-primary">2</h3>
+                        <h3 id="stat-inprogress" class="text-3xl font-bold text-primary">
+                            <span class="skeleton inline-block w-10 h-8 rounded">&nbsp;</span>
+                        </h3>
                     </div>
                     <div class="p-2 bg-primary/10 rounded-lg">
                         <span class="material-symbols-outlined text-primary">sync</span>
@@ -111,11 +147,14 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+            <!-- Selesai -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-2">
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-gray-500 dark:text-gray-400 font-medium mb-1">Selesai</p>
-                        <h3 class="text-3xl font-bold text-green-600">3</h3>
+                        <h3 id="stat-resolved" class="text-3xl font-bold text-green-600">
+                            <span class="skeleton inline-block w-10 h-8 rounded">&nbsp;</span>
+                        </h3>
                     </div>
                     <div class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
                         <span class="material-symbols-outlined text-green-600">check_circle</span>
@@ -124,72 +163,66 @@
             </div>
         </div>
 
-        <div class="mb-6 flex items-center justify-between">
+        <!-- Riwayat Laporan -->
+        <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 fade-in-delay-3">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white">Riwayat Laporan</h3>
-            <button class="text-primary text-sm font-semibold hover:underline">Lihat Semua</button>
+            <span id="complaint-count" class="text-xs text-gray-400 font-medium whitespace-nowrap"></span>
         </div>
 
-        <div class="flex flex-col gap-4 mb-20">
-            <!-- Card 1 -->
-            <a href="/student/report/1" class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 hover:border-primary/30 transition-all cursor-pointer">
-                <div class="w-14 h-14 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-300">
-                    <span class="material-symbols-outlined !text-3xl">chair</span>
+        <!-- Filter Section -->
+        <div class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                <div>
+                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Bulan</label>
+                    <input type="month" id="filter-month" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                 </div>
-                <div class="flex-1">
-                    <div class="flex flex-wrap items-center gap-2 mb-1">
-                        <h4 class="font-bold text-gray-900 dark:text-white">Meja Guru Patah Kaki</h4>
-                        <span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Pending</span>
-                    </div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Ruang Guru • Dilaporkan: 2 Jam yang lalu</p>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Mulai Tanggal</label>
+                    <input type="date" id="filter-date-from" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                 </div>
-                <div class="hidden sm:block">
-                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Sampai Tanggal</label>
+                    <input type="date" id="filter-date-to" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
                 </div>
-            </a>
-
-            <!-- Card 2 -->
-            <a href="/student/report/2" class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-primary/20 dark:border-primary/40 shadow-sm flex items-center gap-4 relative">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                    <span class="material-symbols-outlined !text-3xl">ac_unit</span>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Status</label>
+                    <select id="filter-status" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
+                        <option value="">Semua Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Selesai</option>
+                        <option value="Rejected">Ditolak</option>
+                    </select>
                 </div>
-                <div class="flex-1">
-                    <div class="flex flex-wrap items-center gap-2 mb-1">
-                        <h4 class="font-bold text-gray-900 dark:text-white">AC Lab Komputer Bocor</h4>
-                        <span class="flex items-center gap-1 bg-blue-100 text-primary dark:bg-primary/20 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                            <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
-                            In Progress
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Lab RPL 2 • Dilaporkan: Kemarin</p>
-                        <span class="flex items-center gap-1 text-[11px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded border border-primary/10">
-                            <span class="material-symbols-outlined text-xs">notifications</span>
-                            1 Tanggapan Baru
-                        </span>
-                    </div>
-                </div>
-                <div class="hidden sm:block">
-                    <span class="material-symbols-outlined text-primary">chevron_right</span>
-                </div>
-            </a>
-
-            <!-- Card 3 -->
-            <a href="/student/report/3" class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 opacity-75">
-                <div class="w-14 h-14 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-500">
-                    <span class="material-symbols-outlined !text-3xl">sports_esports</span>
-                </div>
-                <div class="flex-1">
-                    <div class="flex flex-wrap items-center gap-2 mb-1">
-                        <h4 class="font-bold text-gray-900 dark:text-white">Request Pasang PS5</h4>
-                        <span class="bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Rejected</span>
-                    </div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Kantin • Dilaporkan: 3 Hari yang lalu</p>
-                </div>
-                <div class="hidden sm:block">
-                    <span class="material-symbols-outlined text-gray-400">close</span>
-                </div>
-            </a>
+            </div>
+            <div class="flex justify-end gap-3 border-t border-gray-100 dark:border-gray-700 pt-4 mt-2">
+                <button type="button" onclick="resetFilter()" class="px-5 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg text-sm transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">restart_alt</span> Reset
+                </button>
+                <button type="button" onclick="applyFilter()" class="px-5 py-2 bg-primary hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm shadow-primary/30">
+                    <span class="material-symbols-outlined text-[18px]">search</span> Terapkan Filter
+                </button>
+            </div>
         </div>
+
+        <!-- List Complaints (diisi dari API) -->
+        <div id="complaints-list" class="flex flex-col gap-4 mb-20">
+            <!-- Skeleton items saat loading -->
+            <div class="skeleton h-20 w-full rounded-xl"></div>
+            <div class="skeleton h-20 w-full rounded-xl"></div>
+            <div class="skeleton h-20 w-full rounded-xl"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
+            <span class="material-symbols-outlined text-5xl text-red-400 mb-3">wifi_off</span>
+            <p class="text-gray-600 dark:text-gray-300 font-semibold text-lg">Gagal memuat data</p>
+            <p class="text-gray-400 text-sm mb-5">Terjadi kesalahan saat mengambil data dari server.</p>
+            <button onclick="fetchDashboard()" class="px-5 py-2 bg-primary text-white font-bold rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                Coba Lagi
+            </button>
+        </div>
+
     </main>
 
     <!-- Floating Action Button -->
@@ -199,6 +232,184 @@
         </div>
         <span class="font-bold tracking-wide">Buat Laporan</span>
     </a>
+
+    <script>
+        // ─── Status Badge Helper ───────────────────────────────────────────────
+        const STATUS_CONFIG = {
+            'Pending': {
+                badge: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+                label: 'Pending',
+            },
+            'In Progress': {
+                badge: 'bg-blue-100 text-primary dark:bg-primary/20 dark:text-blue-300',
+                label: 'In Progress',
+                pulse: true,
+            },
+            'Resolved': {
+                badge: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+                label: 'Selesai',
+            },
+            'Rejected': {
+                badge: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+                label: 'Rejected',
+            },
+        };
+
+        function getStatusBadge(status) {
+            const cfg = STATUS_CONFIG[status] || { badge: 'bg-gray-100 text-gray-600', label: status };
+            const pulse = cfg.pulse
+                ? `<span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse mr-1 inline-block"></span>`
+                : '';
+            return `<span class="inline-flex items-center ${cfg.badge} text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        ${pulse}${cfg.label}
+                    </span>`;
+        }
+
+        function getCategoryIcon(category) {
+            const map = {
+                'Classroom Facilities': 'chair',
+                'Cleanliness': 'cleaning_services',
+                'Security': 'security',
+            };
+            return map[category] ?? 'report';
+        }
+
+        // ─── Render Complaints ─────────────────────────────────────────────────
+        function renderComplaints(complaints) {
+            const list = document.getElementById('complaints-list');
+
+            if (!complaints || complaints.length === 0) {
+                list.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 text-center">
+                        <span class="material-symbols-outlined text-5xl text-gray-300 mb-3">inbox</span>
+                        <p class="text-gray-500 font-semibold">Belum ada laporan</p>
+                        <p class="text-gray-400 text-sm mt-1">Klik tombol <strong>Buat Laporan</strong> di bawah untuk memulai.</p>
+                    </div>`;
+                return;
+            }
+
+            document.getElementById('complaint-count').textContent = `${complaints.length} laporan`;
+
+            list.innerHTML = complaints.map((c, i) => {
+                const icon = getCategoryIcon(c.category);
+                const badge = getStatusBadge(c.status);
+                const hasResponse = c.responses > 0;
+                const responseBadge = hasResponse
+                    ? `<span class="flex items-center gap-1 text-[11px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded border border-primary/10 ml-2">
+                            <span class="material-symbols-outlined text-xs">notifications</span>
+                            ${c.responses} Tanggapan
+                       </span>`
+                    : '';
+
+                return `
+                    <a href="/student/report/${c.id}"
+                       class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4
+                              hover:border-primary/30 hover:shadow-md transition-all cursor-pointer fade-in"
+                       style="animation-delay: ${i * 60}ms">
+                        <div class="w-14 h-14 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-300 shrink-0">
+                            <span class="material-symbols-outlined !text-3xl">${icon}</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <h4 class="font-bold text-gray-900 dark:text-white truncate">${c.title}</h4>
+                                ${badge}
+                            </div>
+                            <div class="flex items-center flex-wrap gap-1">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">${c.category} • ${c.created_date || c.created_at}</p>
+                                ${responseBadge}
+                            </div>
+                        </div>
+                        <div class="hidden sm:block shrink-0">
+                            <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                        </div>
+                    </a>`;
+            }).join('');
+        }
+
+        // ─── Render User Info ──────────────────────────────────────────────────
+        function renderUser(user) {
+            // Header
+            document.getElementById('header-name').textContent = user.full_name;
+            document.getElementById('header-avatar').innerHTML =
+                `<img alt="${user.full_name}" src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name)}&background=135bec&color=fff" class="w-full h-full object-cover"/>`;
+
+            // Hero banner
+            document.getElementById('hero-greeting').textContent = `Selamat Datang, ${user.full_name}`;
+            document.getElementById('hero-nis').innerHTML =
+                `<span class="material-symbols-outlined text-sm">badge</span>
+                 <span class="text-sm md:text-base">NIS: ${user.identity_number}</span>`;
+            document.getElementById('hero-class').innerHTML =
+                `<span class="material-symbols-outlined text-sm">school</span>
+                 <span class="text-sm md:text-base">Kelas: ${user.class_name ?? '-'}</span>`;
+        }
+
+        // ─── Render Stats ──────────────────────────────────────────────────────
+        function renderStats(stats) {
+            document.getElementById('stat-total').textContent     = stats.total;
+            document.getElementById('stat-inprogress').textContent = stats.in_progress;
+            document.getElementById('stat-resolved').textContent  = stats.resolved;
+        }
+
+        // ─── Fetch API ─────────────────────────────────────────────────────────
+        async function fetchDashboard() {
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('complaints-list').innerHTML = `
+                <div class="skeleton h-20 w-full rounded-xl"></div>
+                <div class="skeleton h-20 w-full rounded-xl"></div>
+                <div class="skeleton h-20 w-full rounded-xl"></div>`;
+
+            try {
+                const month = document.getElementById('filter-month')?.value || '';
+                const dateFrom = document.getElementById('filter-date-from')?.value || '';
+                const dateTo = document.getElementById('filter-date-to')?.value || '';
+                const status = document.getElementById('filter-status')?.value || '';
+
+                const params = new URLSearchParams();
+                if (month) params.append('month', month);
+                if (dateFrom) params.append('date_from', dateFrom);
+                if (dateTo) params.append('date_to', dateTo);
+                if (status) params.append('status', status);
+
+                const url = '/api/student/dashboard' + (params.toString() ? '?' + params.toString() : '');
+
+                const res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    credentials: 'same-origin',
+                });
+
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+                const data = await res.json();
+
+                renderUser(data.user);
+                renderStats(data.stats);
+                renderComplaints(data.complaints);
+
+            } catch (err) {
+                console.error('Dashboard fetch error:', err);
+                document.getElementById('complaints-list').innerHTML = '';
+                document.getElementById('error-state').classList.remove('hidden');
+            }
+        }
+
+        function applyFilter() {
+            fetchDashboard();
+        }
+
+        function resetFilter() {
+            if(document.getElementById('filter-month')) document.getElementById('filter-month').value = '';
+            if(document.getElementById('filter-date-from')) document.getElementById('filter-date-from').value = '';
+            if(document.getElementById('filter-date-to')) document.getElementById('filter-date-to').value = '';
+            if(document.getElementById('filter-status')) document.getElementById('filter-status').value = '';
+            fetchDashboard();
+        }
+
+        // Jalankan saat halaman siap
+        document.addEventListener('DOMContentLoaded', fetchDashboard);
+    </script>
 
 </body>
 </html>

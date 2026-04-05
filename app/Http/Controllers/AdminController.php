@@ -134,8 +134,49 @@ class AdminController extends Controller
 
     public function aspirations(Request $request)
     {
-        $aspirations = Complaint::with(['user', 'category'])->latest('complaint_id')->paginate(10);
-        return view('admin.aspiration-management', compact('aspirations'));
+        $query = Complaint::with(['user', 'category'])
+            ->latest('complaint_id');
+
+        // Filter: tanggal mulai
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        // Filter: tanggal akhir
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        // Filter: kategori
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter: NIS / nama siswa (cari di tabel users via relasi)
+        if ($request->filled('student')) {
+            $search = $request->student;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('identity_number', 'like', "%$search%")
+                  ->orWhere('full_name', 'like', "%$search%");
+            });
+        }
+
+        // Filter: bulan (format: YYYY-MM)
+        if ($request->filled('month')) {
+            [$year, $month] = explode('-', $request->month);
+            $query->whereYear('created_at', $year)
+                  ->whereMonth('created_at', $month);
+        }
+
+        // Filter: status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $aspirations = $query->paginate(15)->withQueryString();
+        $categories  = Category::orderBy('category_name')->get();
+
+        return view('admin.aspiration-management', compact('aspirations', 'categories'));
     }
 
     public function showAspiration($id)
@@ -143,6 +184,56 @@ class AdminController extends Controller
         $aspiration = Complaint::with(['user', 'category', 'responses.user'])->findOrFail($id);
         
         return view('admin.aspiration-detail', compact('aspiration'));
+    }
+
+    public function historiAspirasi(Request $request)
+    {
+        $query = Complaint::with(['user', 'category'])
+            ->withCount('responses')
+            ->whereIn('status', ['Resolved', 'Rejected'])
+            ->latest('updated_at');
+
+        // Filter: bulan
+        if ($request->filled('month')) {
+            [$year, $month] = explode('-', $request->month);
+            $query->whereYear('updated_at', $year)
+                  ->whereMonth('updated_at', $month);
+        }
+
+        // Filter: tanggal mulai
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        // Filter: tanggal akhir
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        // Filter: kategori
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter: NIS / nama siswa
+        if ($request->filled('student')) {
+            $search = $request->student;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('identity_number', 'like', "%$search%")
+                  ->orWhere('full_name', 'like', "%$search%");
+            });
+        }
+
+        $histories      = $query->paginate(15)->withQueryString();
+        $categories     = Category::orderBy('category_name')->get();
+        $totalResolved  = Complaint::where('status', 'Resolved')->count();
+        $totalRejected  = Complaint::where('status', 'Rejected')->count();
+        $totalResponses = \App\Models\Response::count();
+
+        return view('admin.histori-aspirasi', compact(
+            'histories', 'categories',
+            'totalResolved', 'totalRejected', 'totalResponses'
+        ));
     }
 
     public function updateAspiration(Request $request, $id)

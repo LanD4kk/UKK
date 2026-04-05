@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,9 +13,19 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:student'])->group(function () {
-    Route::get('/student/dashboard', function () {
-        return view('student.dashboard');
-    });
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+
+    // API endpoint untuk dashboard siswa (fetch via JS)
+    Route::get('/api/student/dashboard', [StudentController::class, 'apiDashboard'])->name('api.student.dashboard');
+
+    // API endpoint untuk detail laporan (fetch via JS)
+    Route::get('/api/student/report/{id}', [StudentController::class, 'apiReportDetail'])->name('api.student.report.detail');
+
+    // API endpoint untuk daftar kategori
+    Route::get('/api/student/categories', [StudentController::class, 'apiCategories'])->name('api.student.categories');
+
+    // API endpoint untuk membuat laporan baru
+    Route::post('/api/student/report', [StudentController::class, 'storeReport'])->name('api.student.report.store');
 
     Route::get('/student/create-report', function () {
         return view('student.create-report');
@@ -39,6 +50,7 @@ Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     Route::delete('/admin/categories/{id}', [\App\Http\Controllers\AdminController::class, 'destroyCategory'])->name('admin.categories.destroy');
 
     Route::get('/admin/aspirations', [\App\Http\Controllers\AdminController::class, 'aspirations']);
+    Route::get('/admin/aspirations/histori', [\App\Http\Controllers\AdminController::class, 'historiAspirasi'])->name('admin.aspirations.histori');
     Route::get('/admin/aspirations/{id}', [\App\Http\Controllers\AdminController::class, 'showAspiration'])->name('admin.aspirations.show');
     Route::put('/admin/aspirations/{id}', [\App\Http\Controllers\AdminController::class, 'updateAspiration'])->name('admin.aspirations.update');
 });

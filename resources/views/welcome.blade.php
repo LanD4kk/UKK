@@ -79,10 +79,12 @@
                     </div>
                     
                     <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                        <a href="/login">
                         <button class="flex items-center justify-center gap-2 min-w-[220px] rounded-2xl h-16 px-8 bg-primary text-white text-lg font-bold shadow-xl shadow-blue-500/20 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300">
                             <span class="material-symbols-outlined text-2xl">campaign</span>
                             <span>LAPORKAN SEKARANG</span>
                         </button>
+                        </a>
                     </div>
 
                     <!-- Trusted Stats -->
