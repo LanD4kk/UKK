@@ -65,10 +65,6 @@
                 <h3 class="text-slate-900 dark:text-white font-bold text-lg">Laporan Terbaru</h3>
                 <p class="text-slate-500 dark:text-slate-400 text-sm">Daftar keluhan fasilitas sekolah terbaru masuk</p>
             </div>
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">
-                <span class="material-symbols-outlined text-sm">filter_list</span>
-                Filter Data
-            </button>
         </div>
 
         <div class="overflow-x-auto">

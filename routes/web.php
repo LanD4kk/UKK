@@ -39,10 +39,14 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard']);
 
-    Route::get('/admin/students', [\App\Http\Controllers\AdminController::class, 'students'])->name('admin.students.index');
-    Route::post('/admin/students', [\App\Http\Controllers\AdminController::class, 'storeStudent'])->name('admin.students.store');
-    Route::put('/admin/students/{id}', [\App\Http\Controllers\AdminController::class, 'updateStudent'])->name('admin.students.update');
-    Route::delete('/admin/students/{id}', [\App\Http\Controllers\AdminController::class, 'destroyStudent'])->name('admin.students.destroy');
+    Route::get('/admin/accounts', [\App\Http\Controllers\AdminController::class, 'accounts'])->name('admin.accounts.index');
+    Route::post('/admin/accounts/student', [\App\Http\Controllers\AdminController::class, 'storeStudent'])->name('admin.accounts.student.store');
+    Route::put('/admin/accounts/student/{id}', [\App\Http\Controllers\AdminController::class, 'updateStudent'])->name('admin.accounts.student.update');
+    Route::delete('/admin/accounts/student/{id}', [\App\Http\Controllers\AdminController::class, 'destroyStudent'])->name('admin.accounts.student.destroy');
+
+    Route::post('/admin/accounts/staff', [\App\Http\Controllers\AdminController::class, 'storeStaff'])->name('admin.accounts.staff.store');
+    Route::put('/admin/accounts/staff/{id}', [\App\Http\Controllers\AdminController::class, 'updateStaff'])->name('admin.accounts.staff.update');
+    Route::delete('/admin/accounts/staff/{id}', [\App\Http\Controllers\AdminController::class, 'destroyStaff'])->name('admin.accounts.staff.destroy');
 
     Route::get('/admin/categories', [\App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories.index');
     Route::post('/admin/categories', [\App\Http\Controllers\AdminController::class, 'storeCategory'])->name('admin.categories.store');
@@ -53,6 +57,11 @@ Route::middleware(['auth', 'role:admin,staff'])->group(function () {
     Route::get('/admin/aspirations/histori', [\App\Http\Controllers\AdminController::class, 'historiAspirasi'])->name('admin.aspirations.histori');
     Route::get('/admin/aspirations/{id}', [\App\Http\Controllers\AdminController::class, 'showAspiration'])->name('admin.aspirations.show');
     Route::put('/admin/aspirations/{id}', [\App\Http\Controllers\AdminController::class, 'updateAspiration'])->name('admin.aspirations.update');
+    
+    // API endpoint untuk profile akun admin/staff
+    Route::get('/api/admin/profile', function () {
+        return response()->json(auth()->user());
+    })->name('api.admin.profile');
 });
 
 Route::get('/hello', function () {

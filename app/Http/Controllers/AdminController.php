@@ -30,10 +30,40 @@ class AdminController extends Controller
         ));
     }
 
-    public function students(Request $request)
+    public function accounts(Request $request)
     {
-        $students = User::where('role', 'student')->latest('user_id')->paginate(10);
-        return view('admin.student-management', compact('students'));
+        $queryStudent = User::where('role', 'student')->latest('user_id');
+        $queryStaff = User::where('role', 'staff')->latest('user_id');
+
+        if ($request->filled('class_name')) {
+            $queryStudent->where('class_name', $request->class_name);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $queryStudent->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('identity_number', 'like', "%{$search}%");
+            });
+            $queryStaff->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('identity_number', 'like', "%{$search}%");
+            });
+        }
+
+        // Default tab to empty if not set, or retain based on request
+        // Paginators append requested query and use separate page names
+        $students = $queryStudent->paginate(10, ['*'], 'student_page')->withQueryString();
+        $staffs = $queryStaff->paginate(10, ['*'], 'staff_page')->withQueryString();
+
+        $classes = User::where('role', 'student')
+            ->whereNotNull('class_name')
+            ->where('class_name', '!=', '')
+            ->distinct()
+            ->orderBy('class_name')
+            ->pluck('class_name');
+
+        return view('admin.account-management', compact('students', 'staffs', 'classes'));
     }
 
     public function storeStudent(Request $request)
@@ -83,6 +113,51 @@ class AdminController extends Controller
         $student->delete();
 
         return redirect()->back()->with('success', 'Akun siswa beserta seluruh data laporannya berhasil dihapus secara permanen.');
+    }
+
+    public function storeStaff(Request $request)
+    {
+        $request->validate([
+            'identity_number' => 'required|string|max:50|unique:users,identity_number',
+            'full_name' => 'required|string|max:100',
+            'phone_number' => 'nullable|string|max:15',
+            'password' => 'required|string|min:6',
+        ]);
+
+        User::create([
+            'identity_number' => $request->identity_number,
+            'full_name' => $request->full_name,
+            'phone_number' => $request->phone_number,
+            'password' => bcrypt($request->password),
+            'role' => 'staff',
+        ]);
+
+        return redirect()->back()->with('success', 'Akun staff baru berhasil ditambahkan.');
+    }
+
+    public function updateStaff(Request $request, $id)
+    {
+        $staff = User::where('role', 'staff')->findOrFail($id);
+
+        $request->validate([
+            'full_name' => 'required|string|max:100',
+            'phone_number' => 'nullable|string|max:15',
+        ]);
+
+        $staff->update([
+            'full_name' => $request->full_name,
+            'phone_number' => $request->phone_number,
+        ]);
+
+        return redirect()->back()->with('success', 'Data staff berhasil diperbarui.');
+    }
+
+    public function destroyStaff($id)
+    {
+        $staff = User::where('role', 'staff')->findOrFail($id);
+        $staff->delete();
+
+        return redirect()->back()->with('success', 'Akun staff berhasil dihapus secara permanen.');
     }
 
     public function categories(Request $request)

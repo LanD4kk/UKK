@@ -14,9 +14,9 @@
         <span class="text-sm font-medium">Dashboard</span>
     </a>
 
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->is('admin/students') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600' }} transition-all {{ request()->is('admin/students') ? 'hover:scale-[1.02]' : '' }}" href="/admin/students">
+    <a class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->is('admin/accounts') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600' }} transition-all {{ request()->is('admin/accounts') ? 'hover:scale-[1.02]' : '' }}" href="/admin/accounts">
         <span class="material-symbols-outlined">group</span>
-        <span class="text-sm font-medium">Manajemen Siswa</span>
+        <span class="text-sm font-medium">Manajemen Akun</span>
     </a>
 
     <a class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->is('admin/categories') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600' }} transition-all {{ request()->is('admin/categories') ? 'hover:scale-[1.02]' : '' }}" href="/admin/categories">

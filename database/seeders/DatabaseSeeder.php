@@ -79,5 +79,8 @@ class DatabaseSeeder extends Seeder
             'user_id' => $staff->user_id,
             'message' => 'I am currently checking the AC unit and replacing the filter.',
         ]);
+
+        // Call the faker-based dummy data seeder
+        $this->call(TestingDummyDataSeeder::class);
     }
 }

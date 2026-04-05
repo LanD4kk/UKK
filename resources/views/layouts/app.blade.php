@@ -45,5 +45,6 @@
 
     </div>
 
+    @include('partials.account-modal')
 </body>
 </html>
