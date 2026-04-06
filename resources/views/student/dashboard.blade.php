@@ -169,41 +169,6 @@
             <span id="complaint-count" class="text-xs text-gray-400 font-medium whitespace-nowrap"></span>
         </div>
 
-        <!-- Filter Section -->
-        <div class="mb-6 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-3">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                <div>
-                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Bulan</label>
-                    <input type="month" id="filter-month" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Mulai Tanggal</label>
-                    <input type="date" id="filter-date-from" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Sampai Tanggal</label>
-                    <input type="date" id="filter-date-to" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 block">Status</label>
-                    <select id="filter-status" class="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors">
-                        <option value="">Semua Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Selesai</option>
-                        <option value="Rejected">Ditolak</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex justify-end gap-3 border-t border-gray-100 dark:border-gray-700 pt-4 mt-2">
-                <button type="button" onclick="resetFilter()" class="px-5 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg text-sm transition-colors flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">restart_alt</span> Reset
-                </button>
-                <button type="button" onclick="applyFilter()" class="px-5 py-2 bg-primary hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition-colors flex items-center gap-2 shadow-sm shadow-primary/30">
-                    <span class="material-symbols-outlined text-[18px]">search</span> Terapkan Filter
-                </button>
-            </div>
-        </div>
 
         <!-- List Complaints (diisi dari API) -->
         <div id="complaints-list" class="flex flex-col gap-4 mb-20">
@@ -359,20 +324,7 @@
                 <div class="skeleton h-20 w-full rounded-xl"></div>`;
 
             try {
-                const month = document.getElementById('filter-month')?.value || '';
-                const dateFrom = document.getElementById('filter-date-from')?.value || '';
-                const dateTo = document.getElementById('filter-date-to')?.value || '';
-                const status = document.getElementById('filter-status')?.value || '';
-
-                const params = new URLSearchParams();
-                if (month) params.append('month', month);
-                if (dateFrom) params.append('date_from', dateFrom);
-                if (dateTo) params.append('date_to', dateTo);
-                if (status) params.append('status', status);
-
-                const url = '/api/student/dashboard' + (params.toString() ? '?' + params.toString() : '');
-
-                const res = await fetch(url, {
+                const res = await fetch('/api/student/dashboard', {
                     headers: {
                         'Accept': 'application/json',
                         'X-Requested-With': 'XMLHttpRequest',
@@ -393,18 +345,6 @@
                 document.getElementById('complaints-list').innerHTML = '';
                 document.getElementById('error-state').classList.remove('hidden');
             }
-        }
-
-        function applyFilter() {
-            fetchDashboard();
-        }
-
-        function resetFilter() {
-            if(document.getElementById('filter-month')) document.getElementById('filter-month').value = '';
-            if(document.getElementById('filter-date-from')) document.getElementById('filter-date-from').value = '';
-            if(document.getElementById('filter-date-to')) document.getElementById('filter-date-to').value = '';
-            if(document.getElementById('filter-status')) document.getElementById('filter-status').value = '';
-            fetchDashboard();
         }
 
         // Jalankan saat halaman siap

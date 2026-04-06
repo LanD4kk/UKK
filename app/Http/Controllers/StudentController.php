@@ -20,7 +20,7 @@ class StudentController extends Controller
     /**
      * API: Ambil data ringkasan dashboard siswa yang sedang login.
      */
-    public function apiDashboard(Request $request)
+    public function apiDashboard()
     {
         $user = Auth::user();
 
@@ -32,31 +32,12 @@ class StudentController extends Controller
         $resolved   = $allComplaints->where('status', 'Resolved')->count();
         $rejected   = $allComplaints->where('status', 'Rejected')->count();
 
-        // 2. Query data riwayat dengan filter
-        $query = Complaint::with(['category', 'responses'])
+        // 2. Query data riwayat
+        $filteredComplaints = Complaint::with(['category', 'responses'])
             ->where('user_id', $user->user_id)
-            ->latest();
-
-        if ($request->filled('month')) {
-            $month = substr($request->month, 5, 2);
-            $year = substr($request->month, 0, 4);
-            $query->whereMonth('created_at', $month)
-                  ->whereYear('created_at', $year);
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        $filteredComplaints = $query->get()->map(function ($c) {
+            ->latest()
+            ->get()
+            ->map(function ($c) {
             return [
                 'id'           => $c->complaint_id,
                 'title'        => $c->title,
