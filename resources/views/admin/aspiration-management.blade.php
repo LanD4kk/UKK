@@ -67,27 +67,19 @@
                     <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
                 </div>
             </div>
-
-            {{-- Status --}}
             <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status</label>
-                <select name="status"
-                        class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all">
-                    <option value="">Semua Status</option>
-                    <option value="Pending"     {{ request('status') === 'Pending'     ? 'selected' : '' }}>Menunggu</option>
-                    <option value="In Progress" {{ request('status') === 'In Progress' ? 'selected' : '' }}>Dalam Proses</option>
-                    <option value="Resolved"    {{ request('status') === 'Resolved'    ? 'selected' : '' }}>Selesai</option>
-                    <option value="Rejected"    {{ request('status') === 'Rejected'    ? 'selected' : '' }}>Ditolak</option>
-                </select>
-            </div>
-
-            {{-- Tombol Submit --}}
-            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-6 flex justify-end gap-3">
+                <div class="relative">
                 <a href="{{ url()->current() }}"
                    class="h-11 px-5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
                     <span class="material-symbols-outlined text-[18px]">restart_alt</span>
                     Reset
                 </a>
+                </div>
+            </div>
+
+
+            {{-- Tombol Submit --}}
+            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-6 flex justify-end gap-3">
                 <button type="submit"
                         class="h-11 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-sm shadow-md shadow-blue-600/25 flex items-center gap-2 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">search</span>
@@ -99,7 +91,7 @@
 </section>
 
 {{-- ─── Active Filter Tags ───────────────────────────────────────────────────── --}}
-@if(request()->hasAny(['date_from','date_to','category_id','student','month','status']))
+@if(request()->hasAny(['date_from','date_to','category_id','student','month']))
 <div class="flex flex-wrap gap-2 mb-4">
     <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center">Filter aktif:</span>
 
@@ -132,12 +124,6 @@
         <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
             <span class="material-symbols-outlined text-[13px]">person_search</span>
             Siswa: "{{ request('student') }}"
-        </span>
-    @endif
-    @if(request('status'))
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">flag</span>
-            Status: {{ request('status') }}
         </span>
     @endif
 </div>

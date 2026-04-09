@@ -28,11 +28,6 @@
         <span class="material-symbols-outlined">inbox</span>
         <span class="text-sm font-medium">Manajemen Aspirasi</span>
     </a>
-
-    <a class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->is('admin/aspirations/histori') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600' }} transition-all {{ request()->is('admin/aspirations/histori') ? 'hover:scale-[1.02]' : '' }}" href="/admin/aspirations/histori">
-        <span class="material-symbols-outlined">history</span>
-        <span class="text-sm font-medium">Histori Aspirasi</span>
-    </a>
 </nav>
 
 <div class="p-4 mt-auto">
