@@ -84,7 +84,7 @@
                     <span class="text-xs text-gray-500 font-medium">Laporan Saya / Detail</span>
                 </div>
             </div>
-            <div id="header-status">
+            <div id="header-status" class="flex items-center gap-2">
                 <span class="skeleton inline-block w-28 h-8 rounded-full">&nbsp;</span>
             </div>
         </div>
@@ -376,7 +376,15 @@
                 // ── Header ──
                 document.getElementById('page-title').textContent = `Detail Laporan #${complaint.id} - SIPAS`;
                 document.getElementById('header-id').textContent  = `#${complaint.id}`;
-                document.getElementById('header-status').innerHTML = renderStatusBadge(complaint.status);
+                
+                let headerStatusHtml = '';
+                if (complaint.status === 'Pending') {
+                    headerStatusHtml += `<a href="/student/edit-report/${complaint.id}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-full text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">edit</span> Edit
+                    </a>`;
+                }
+                headerStatusHtml += renderStatusBadge(complaint.status);
+                document.getElementById('header-status').innerHTML = headerStatusHtml;
 
                 // ── Photo ──
                 renderPhoto(complaint.evidence_photo, complaint.category);

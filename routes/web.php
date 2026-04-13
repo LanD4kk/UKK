@@ -27,12 +27,19 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     // API endpoint untuk membuat laporan baru
     Route::post('/api/student/report', [StudentController::class, 'storeReport'])->name('api.student.report.store');
 
+    // API endpoint untuk update laporan
+    Route::post('/api/student/report/{id}', [StudentController::class, 'updateReport'])->name('api.student.report.update');
+
     Route::get('/student/create-report', function () {
         return view('student.create-report');
     });
 
     Route::get('/student/report/{id}', function ($id) {
         return view('student.report-detail');
+    });
+
+    Route::get('/student/edit-report/{id}', function ($id) {
+        return view('student.edit-report', ['id' => $id]);
     });
 });
 

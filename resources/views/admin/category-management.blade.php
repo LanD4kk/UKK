@@ -32,16 +32,22 @@
         <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">Daftar Kategori Laporan</h1>
         <p class="text-slate-500 dark:text-slate-400 mt-1">Kelola jenis-jenis permasalahan fasilitas sekolah secara efisien.</p>
     </div>
-    <button data-modal-target="addCategoryModal" data-modal-toggle="addCategoryModal" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-lg shadow-blue-600/20 transition-all active:scale-95">
-        <span class="material-symbols-outlined text-[20px]">add_circle</span>
-        <span>Tambah Kategori</span>
-    </button>
+    <div class="flex items-center gap-3 w-full md:w-auto">
+        <div class="relative flex-1 md:w-64">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input type="text" id="searchInput" onkeyup="searchTable()" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-900 focus:ring-blue-600 focus:border-blue-600 text-sm shadow-sm transition duration-150 ease-in-out" placeholder="Cari Kategori..."/>
+        </div>
+        <button data-modal-target="addCategoryModal" data-modal-toggle="addCategoryModal" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-lg shadow-blue-600/20 transition-all active:scale-95">
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            <span class="whitespace-nowrap">Tambah</span>
+        </button>
+    </div>
 </div>
 
 <!-- Category Table Card -->
 <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+        <table id="myTable" class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-slate-50 dark:bg-slate-800/50">
                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">ID</th>
@@ -169,6 +175,11 @@
                     </div>
                 </div>
                 @empty
+                <tr id="noDataMessage" style="display: none;">
+                    <td colspan="4" class="px-6 py-8 text-center text-slate-500">
+                        Opps! Data tidak ditemukan.
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="4" class="px-6 py-8 text-center text-slate-500">
                         Belum ada data kategori.
@@ -234,6 +245,41 @@
 </div>
 
 <script>
+    function searchTable() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById("myTable");
+        let tbody = table.getElementsByTagName("tbody")[0];
+        let tr = tbody.getElementsByTagName("tr");
+        let hasVisibleRow = false;
+
+        for (let i = 0; i < tr.length; i++) {
+            if (tr[i].id === "noDataMessage") continue;
+            
+            let td = tr[i].getElementsByTagName("td");
+            let showRow = false;
+
+            for (let j = 0; j < td.length; j++) {
+                if (td[j] && td[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                tr[i].style.display = "";
+                hasVisibleRow = true;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+
+        let noDataMsg = document.getElementById("noDataMessage");
+        if (noDataMsg) {
+            noDataMsg.style.display = hasVisibleRow ? "none" : "table-row";
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             @if(old('form_type') === 'add-category')

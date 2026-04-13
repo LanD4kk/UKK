@@ -4,136 +4,24 @@
 
 @section('content')
 
-{{-- ─── Filter Section ─────────────────────────────────────────────────────── --}}
-<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6">
-    <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
-        <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-            <span class="material-symbols-outlined text-blue-600">filter_list</span>
-            Filter Data
-        </h3>
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 mt-2">
+    <div>
+        <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Manajemen Aspirasi</h2>
+        <p class="text-slate-500 mt-1">Kelola dan pantau seluruh laporan dari siswa</p>
     </div>
-
-    <div class="p-6">
-        <form method="GET" action="{{ url()->current() }}"
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 items-end">
-
-            {{-- Per Bulan --}}
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Per Bulan</label>
-                <input name="month" type="month"
-                       value="{{ request('month') }}"
-                       class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all"/>
-            </div>
-
-            {{-- Mulai Tanggal --}}
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Mulai Tanggal</label>
-                <input name="date_from" type="date"
-                       value="{{ request('date_from') }}"
-                       class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all"/>
-            </div>
-
-            {{-- Sampai Tanggal --}}
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sampai Tanggal</label>
-                <input name="date_to" type="date"
-                       value="{{ request('date_to') }}"
-                       class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all"/>
-            </div>
-
-            {{-- Kategori --}}
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Kategori</label>
-                <select name="category_id"
-                        class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all">
-                    <option value="">Semua Kategori</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat->category_id }}"
-                            {{ request('category_id') == $cat->category_id ? 'selected' : '' }}>
-                            {{ $cat->category_name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            {{-- NIS / Nama Siswa --}}
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">NIS / Nama Siswa</label>
-                <div class="relative">
-                    <input name="student" type="text"
-                           value="{{ request('student') }}"
-                           placeholder="Cari NIS atau nama..."
-                           class="w-full h-11 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg pl-9 pr-3 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition-all"/>
-                    <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
-                </div>
-            </div>
-            <div class="space-y-1.5">
-                <div class="relative">
-                <a href="{{ url()->current() }}"
-                   class="h-11 px-5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">restart_alt</span>
-                    Reset
-                </a>
-                </div>
-            </div>
-
-
-            {{-- Tombol Submit --}}
-            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-6 flex justify-end gap-3">
-                <button type="submit"
-                        class="h-11 px-7 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-sm shadow-md shadow-blue-600/25 flex items-center gap-2 transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">search</span>
-                    Tampilkan Data
-                </button>
-            </div>
-        </form>
+    <div class="flex items-center gap-3 w-full md:w-auto">
+        <div class="relative flex-1 md:w-72">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+            <input type="text" id="searchInput" onkeyup="searchTable()" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-900 focus:ring-blue-600 focus:border-blue-600 text-sm shadow-sm transition duration-150 ease-in-out" placeholder="Cari data, tanggal, kategori..."/>
+        </div>
     </div>
-</section>
-
-{{-- ─── Active Filter Tags ───────────────────────────────────────────────────── --}}
-@if(request()->hasAny(['date_from','date_to','category_id','student','month']))
-<div class="flex flex-wrap gap-2 mb-4">
-    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center">Filter aktif:</span>
-
-    @if(request('month'))
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">calendar_month</span>
-            Bulan: {{ \Carbon\Carbon::createFromFormat('Y-m', request('month'))->format('F Y') }}
-        </span>
-    @endif
-    @if(request('date_from'))
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">event</span>
-            Dari: {{ \Carbon\Carbon::parse(request('date_from'))->format('d M Y') }}
-        </span>
-    @endif
-    @if(request('date_to'))
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">event</span>
-            Sampai: {{ \Carbon\Carbon::parse(request('date_to'))->format('d M Y') }}
-        </span>
-    @endif
-    @if(request('category_id'))
-        @php $activeCat = $categories->firstWhere('category_id', request('category_id')); @endphp
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">category</span>
-            {{ $activeCat?->category_name ?? 'Kategori' }}
-        </span>
-    @endif
-    @if(request('student'))
-        <span class="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full">
-            <span class="material-symbols-outlined text-[13px]">person_search</span>
-            Siswa: "{{ request('student') }}"
-        </span>
-    @endif
 </div>
-@endif
 
 {{-- ─── Results Table ───────────────────────────────────────────────────────── --}}
 <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
         <div>
-            <h3 class="font-bold text-slate-800 dark:text-slate-100">Hasil Pencarian</h3>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">Daftar Laporan Aspirasi</h3>
             <p class="text-xs text-slate-400 mt-0.5">
                 Menampilkan <span class="font-semibold text-slate-600 dark:text-slate-300">{{ $aspirations->firstItem() ?? 0 }}–{{ $aspirations->lastItem() ?? 0 }}</span>
                 dari total <span class="font-semibold text-slate-600 dark:text-slate-300">{{ $aspirations->total() }}</span> laporan
@@ -148,7 +36,7 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+        <table id="myTable" class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-slate-50/30 dark:bg-slate-800/30 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     <th class="px-6 py-4 text-center border-b border-slate-100 dark:border-slate-800 w-16">No</th>
@@ -219,6 +107,11 @@
                     </td>
                 </tr>
                 @empty
+                <tr id="noDataMessage" style="display: none;">
+                    <td colspan="7" class="px-6 py-8 text-center text-slate-500">
+                        Opps! Data tidak ditemukan.
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="7" class="px-6 py-16 text-center">
                         <div class="flex flex-col items-center gap-3 text-slate-400">
@@ -240,5 +133,42 @@
     </div>
     @endif
 </section>
+
+<script>
+    function searchTable() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById("myTable");
+        let tbody = table.getElementsByTagName("tbody")[0];
+        let tr = tbody.getElementsByTagName("tr");
+        let hasVisibleRow = false;
+
+        for (let i = 0; i < tr.length; i++) {
+            if (tr[i].id === "noDataMessage") continue;
+            
+            let td = tr[i].getElementsByTagName("td");
+            let showRow = false;
+
+            for (let j = 0; j < td.length; j++) {
+                if (td[j] && td[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                    showRow = true;
+                    break;
+                }
+            }
+
+            if (showRow) {
+                tr[i].style.display = "";
+                hasVisibleRow = true;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+
+        let noDataMsg = document.getElementById("noDataMessage");
+        if (noDataMsg) {
+            noDataMsg.style.display = hasVisibleRow ? "none" : "table-row";
+        }
+    }
+</script>
 
 @endsection
