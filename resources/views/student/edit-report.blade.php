@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Edit Laporan - SIPAS</title>
+    <title>Edit Laporan</title>
 
     <script src="/js/tailwind.min.js"></script>
     <link href="/css/google-fonts.css" rel="stylesheet"/>
@@ -95,7 +95,7 @@
                 </a>
                 <div>
                     <h1 class="text-base font-bold text-gray-900 dark:text-white leading-tight">Edit Laporan #{{ $id }}</h1>
-                    <p class="text-xs text-gray-400">SIPAS · SMKN 4 Tangerang</p>
+                    <p class="text-xs text-gray-400">S - Patch · SMKN 4 Tangerang</p>
                 </div>
             </div>
             <!-- Step indicator -->

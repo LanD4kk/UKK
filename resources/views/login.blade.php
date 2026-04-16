@@ -171,7 +171,6 @@
                             <div class="space-y-1.5">
                                 <div class="flex justify-between px-1">
                                     <label class="text-xs font-bold uppercase text-slate-500 tracking-wider">Password</label>
-                                    <a href="#" class="text-xs font-bold text-purple-600 hover:underline">Lupa Password?</a>
                                 </div>
                                 <div class="relative group">
                                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-purple-600 transition-colors">key</span>

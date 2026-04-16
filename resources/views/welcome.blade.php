@@ -99,38 +99,6 @@
                 </div>
         </section>
 
-        <section class="px-6 lg:px-10 py-20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-6">
-                    <div class="h-16 w-16 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                        <span class="material-symbols-outlined text-4xl">inventory</span>
-                    </div>
-                    <div>
-                        <p class="text-3xl font-black text-[#0d121b]">1,284</p>
-                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Laporan</p>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-6">
-                    <div class="h-16 w-16 rounded-2xl bg-yellow-100 flex items-center justify-center text-yellow-600 shrink-0">
-                        <span class="material-symbols-outlined text-4xl">pending_actions</span>
-                    </div>
-                    <div>
-                        <p class="text-3xl font-black text-[#0d121b]">12</p>
-                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Sedang Proses</p>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-6">
-                    <div class="h-16 w-16 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 shrink-0">
-                        <span class="material-symbols-outlined text-4xl">task_alt</span>
-                    </div>
-                    <div>
-                        <p class="text-3xl font-black text-[#0d121b]">1,272</p>
-                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Selesai</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="px-6 lg:px-10 py-20 bg-gray-50 rounded-t-[3rem] mt-10" id="flow">
             <div class="text-center mb-16">
                 <h2 class="text-3xl lg:text-4xl font-black mb-4 text-[#0d121b]">Alur Pengaduan</h2>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Student Dashboard - SIPAS</title>
+    <title>Student Dashboard - S - Patch</title>
     
     <script src="/js/tailwind.min.js"></script>
     <link href="/css/google-fonts.css" rel="stylesheet"/>

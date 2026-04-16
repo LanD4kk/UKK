@@ -17,10 +17,16 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
-        'name',
-        'email',
+        'identity_number',
+        'full_name',
+        'class_name',
         'password',
+        'phone_number',
+        'role',
     ];
 
     /**
@@ -44,5 +50,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function complaints() {
+        return $this->hasMany(Complaint::class, 'user_id', 'user_id');
+    }
+
+    public function responses() {
+        return $this->hasMany(Response::class, 'user_id', 'user_id');
     }
 }

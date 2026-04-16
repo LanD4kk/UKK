@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title id="page-title">Detail Laporan - SIPAS</title>
+    <title id="page-title">Detail Laporan - S - Patch</title>
 
     <script src="/js/tailwind.min.js"></script>
     <link href="/css/google-fonts.css" rel="stylesheet"/>
@@ -374,7 +374,7 @@
                 const { complaint, responses } = data;
 
                 // ── Header ──
-                document.getElementById('page-title').textContent = `Detail Laporan #${complaint.id} - SIPAS`;
+                document.getElementById('page-title').textContent = `Detail Laporan #${complaint.id} - S - Patch`;
                 document.getElementById('header-id').textContent  = `#${complaint.id}`;
                 
                 let headerStatusHtml = '';
