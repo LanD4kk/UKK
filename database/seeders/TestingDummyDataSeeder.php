@@ -18,7 +18,6 @@ class TestingDummyDataSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
 
-        // Setup categories
         $categories = ['Fasilitas', 'Akademik', 'Pelayanan', 'Lainnya'];
         $catIds = [];
         foreach ($categories as $cat) {
@@ -26,7 +25,6 @@ class TestingDummyDataSeeder extends Seeder
             $catIds[] = $category->category_id;
         }
 
-        // Create 15 Staff
         for ($i = 1; $i <= 15; $i++) {
             User::firstOrCreate(
                 ['identity_number' => 'STAFF' . str_pad($i, 3, '0', STR_PAD_LEFT)],
@@ -39,7 +37,6 @@ class TestingDummyDataSeeder extends Seeder
             );
         }
 
-        // Create 15 Students
         $studentIds = [];
         $classes = ['XII RPL 1', 'XII RPL 2', 'XI TKJ 1', 'X TKR 1'];
         for ($i = 1; $i <= 15; $i++) {
@@ -56,10 +53,8 @@ class TestingDummyDataSeeder extends Seeder
             $studentIds[] = $student->user_id;
         }
 
-        // Clear existing complaints for these generated students
         Complaint::whereIn('user_id', $studentIds)->delete();
 
-        // Create 30 Aspirations
         $statuses = ['Pending', 'In Progress', 'Resolved', 'Rejected'];
         $aspirations = [];
         for ($i = 1; $i <= 30; $i++) {
