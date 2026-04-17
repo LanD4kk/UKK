@@ -34,7 +34,6 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
-        /* Skeleton loading animation */
         .skeleton {
             background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
             background-size: 200% 100%;
@@ -46,7 +45,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Fade in animation */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -59,7 +57,6 @@
 </head>
 <body class="bg-background-light dark:bg-background-dark min-h-screen font-display">
 
-    <!-- Header -->
     <header class="sticky top-0 z-50 w-full bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -67,14 +64,12 @@
                     <img src="/img/logo.png" alt="S-Patch Logo" class="h-10 w-auto object-contain" />
                 </div>
                 <div class="flex items-center gap-4">
-                    <!-- User Info (diisi dari API) -->
                     <div class="hidden md:flex flex-col items-end">
                         <span id="header-name" class="text-sm font-semibold text-gray-900 dark:text-white">
                             <span class="skeleton inline-block w-28 h-4 rounded">&nbsp;</span>
                         </span>
                         <span class="text-xs text-gray-500 dark:text-gray-400">Siswa SMKN 4 Tangerang</span>
                     </div>
-                    <!-- Avatar (diisi dari API) -->
                     <div id="header-avatar" class="h-10 w-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center overflow-hidden">
                         <span class="skeleton w-full h-full rounded-full inline-block">&nbsp;</span>
                     </div>
@@ -92,7 +87,6 @@
 
     <main class="max-w-[1200px] mx-auto px-4 py-8 sm:px-6 lg:px-8">
 
-        <!-- Hero Banner Skeleton → diisi API -->
         <div id="hero-section" class="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:p-12 mb-8 shadow-xl shadow-primary/20">
             <div class="absolute right-[-20px] top-[-20px] opacity-10">
                 <span class="material-symbols-outlined !text-[200px]">assignment</span>
@@ -115,9 +109,7 @@
             </div>
         </div>
 
-        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <!-- Total Laporan -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in">
                 <div class="flex justify-between items-start">
                     <div>
@@ -132,7 +124,6 @@
                 </div>
             </div>
 
-            <!-- Dalam Proses -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-1">
                 <div class="flex justify-between items-start">
                     <div>
@@ -147,7 +138,6 @@
                 </div>
             </div>
 
-            <!-- Selesai -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm fade-in-delay-2">
                 <div class="flex justify-between items-start">
                     <div>
@@ -163,22 +153,18 @@
             </div>
         </div>
 
-        <!-- Riwayat Laporan -->
         <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 fade-in-delay-3">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white">Riwayat Laporan</h3>
             <span id="complaint-count" class="text-xs text-gray-400 font-medium whitespace-nowrap"></span>
         </div>
 
 
-        <!-- List Complaints (diisi dari API) -->
         <div id="complaints-list" class="flex flex-col gap-4 mb-20">
-            <!-- Skeleton items saat loading -->
             <div class="skeleton h-20 w-full rounded-xl"></div>
             <div class="skeleton h-20 w-full rounded-xl"></div>
             <div class="skeleton h-20 w-full rounded-xl"></div>
         </div>
 
-        <!-- Error State -->
         <div id="error-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
             <span class="material-symbols-outlined text-5xl text-red-400 mb-3">wifi_off</span>
             <p class="text-gray-600 dark:text-gray-300 font-semibold text-lg">Gagal memuat data</p>
@@ -190,7 +176,6 @@
 
     </main>
 
-    <!-- Floating Action Button -->
     <a href="/student/create-report" class="fixed bottom-8 right-8 flex items-center gap-3 bg-primary text-white p-4 pr-6 rounded-full shadow-2xl shadow-primary/40 hover:scale-105 active:scale-95 transition-transform z-50">
         <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
             <span class="material-symbols-outlined">edit</span>
@@ -199,7 +184,6 @@
     </a>
 
     <script>
-        // ─── Status Badge Helper ───────────────────────────────────────────────
         const STATUS_CONFIG = {
             'Pending': {
                 badge: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
@@ -239,7 +223,6 @@
             return map[category] ?? 'report';
         }
 
-        // ─── Render Complaints ─────────────────────────────────────────────────
         function renderComplaints(complaints) {
             const list = document.getElementById('complaints-list');
 
@@ -291,14 +274,11 @@
             }).join('');
         }
 
-        // ─── Render User Info ──────────────────────────────────────────────────
         function renderUser(user) {
-            // Header
             document.getElementById('header-name').textContent = user.full_name;
             document.getElementById('header-avatar').innerHTML =
                 `<img alt="${user.full_name}" src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.full_name)}&background=135bec&color=fff" class="w-full h-full object-cover"/>`;
 
-            // Hero banner
             document.getElementById('hero-greeting').textContent = `Selamat Datang, ${user.full_name}`;
             document.getElementById('hero-nis').innerHTML =
                 `<span class="material-symbols-outlined text-sm">badge</span>
@@ -308,14 +288,12 @@
                  <span class="text-sm md:text-base">Kelas: ${user.class_name ?? '-'}</span>`;
         }
 
-        // ─── Render Stats ──────────────────────────────────────────────────────
         function renderStats(stats) {
             document.getElementById('stat-total').textContent     = stats.total;
             document.getElementById('stat-inprogress').textContent = stats.in_progress;
             document.getElementById('stat-resolved').textContent  = stats.resolved;
         }
 
-        // ─── Fetch API ─────────────────────────────────────────────────────────
         async function fetchDashboard() {
             document.getElementById('error-state').classList.add('hidden');
             document.getElementById('complaints-list').innerHTML = `
@@ -347,7 +325,6 @@
             }
         }
 
-        // Jalankan saat halaman siap
         document.addEventListener('DOMContentLoaded', fetchDashboard);
     </script>
 

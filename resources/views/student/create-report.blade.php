@@ -46,7 +46,6 @@
         }
         .fade-in { animation: fadeInUp 0.35s ease both; }
 
-        /* Custom select arrow */
         select {
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5z"/></svg>');
             background-position: right 0.75rem center;
@@ -58,16 +57,12 @@
             appearance: none;
         }
 
-        /* Input focus ring */
         .field-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(19,91,236,0.15); border-color: #135bec; }
 
-        /* Photo drop zone */
         #drop-zone.drag-over { border-color: #135bec; background-color: rgba(19,91,236,0.06); }
 
-        /* Char counter */
         #title-counter, #desc-counter { transition: color 0.2s; }
 
-        /* Toast notification */
         #toast {
             transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
             transform: translateY(120%);
@@ -78,14 +73,12 @@
             opacity: 1;
         }
 
-        /* Submit spinner */
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner { animation: spin 0.8s linear infinite; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#0d121b] dark:text-gray-100 min-h-screen flex flex-col">
 
-    <!-- ─── Header ─────────────────────────────────────────────────────────────── -->
     <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
         <div class="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -98,7 +91,6 @@
                     <p class="text-xs text-gray-400">S - Patch · SMKN 4 Tangerang</p>
                 </div>
             </div>
-            <!-- Step indicator -->
             <div class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-gray-400">
                 <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</span>
                 <span>Isi detail laporan</span>
@@ -106,11 +98,9 @@
         </div>
     </header>
 
-    <!-- ─── Main ──────────────────────────────────────────────────────────────── -->
     <main class="flex-1 overflow-y-auto">
         <div class="max-w-3xl mx-auto px-4 py-8 pb-36">
 
-            <!-- Info Box -->
             <div class="mb-8 p-5 rounded-xl border border-primary/20 bg-primary/5 dark:bg-primary/10 flex gap-4 items-start fade-in">
                 <span class="material-symbols-outlined text-primary text-[28px] shrink-0 mt-0.5">info</span>
                 <div>
@@ -122,10 +112,8 @@
                 </div>
             </div>
 
-            <!-- ─── Form ─────────────────────────────────────────────────────── -->
             <form id="report-form" class="space-y-6" novalidate>
 
-                <!-- Kategori -->
                 <div class="space-y-2 fade-in">
                     <label for="category_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                         Kategori Masalah <span class="text-red-500">*</span>
@@ -135,7 +123,6 @@
                                 class="field-input w-full h-14 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white transition-all">
                             <option disabled selected value="">— Pilih kategori masalah —</option>
                         </select>
-                        <!-- Skeleton overlay saat loading kategori -->
                         <div id="category-skeleton" class="absolute inset-0 skeleton rounded-xl"></div>
                     </div>
                     <p id="category-error" class="hidden text-xs text-red-500 font-medium flex items-center gap-1">
@@ -143,7 +130,6 @@
                     </p>
                 </div>
 
-                <!-- Judul Laporan -->
                 <div class="space-y-2 fade-in">
                     <div class="flex justify-between items-center">
                         <label for="title" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -159,7 +145,6 @@
                     </p>
                 </div>
 
-                <!-- Deskripsi -->
                 <div class="space-y-2 fade-in">
                     <div class="flex justify-between items-center">
                         <label for="description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -175,27 +160,23 @@
                     </p>
                 </div>
 
-                <!-- Upload Foto -->
                 <div class="space-y-2 fade-in">
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                         Foto Bukti <span class="text-gray-400 font-normal">(Opsional, maks. 5 MB)</span>
                     </label>
 
-                    <!-- Drop Zone -->
                     <div id="drop-zone"
                          class="relative flex flex-col items-center justify-center w-full min-h-[180px] border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800/50 transition-all cursor-pointer hover:border-primary/50 hover:bg-primary/5">
                         <input id="evidence_photo" name="evidence_photo" type="file"
                                accept="image/jpeg,image/png,image/webp"
                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"/>
 
-                        <!-- Placeholder (shown when no file selected) -->
                         <div id="upload-placeholder" class="flex flex-col items-center gap-2 text-center px-4 pointer-events-none">
                             <span class="material-symbols-outlined text-[48px] text-primary">photo_camera</span>
                             <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">Klik atau seret foto ke sini</p>
                             <p class="text-xs text-gray-400">JPG, PNG, WEBP · Maks. 5 MB</p>
                         </div>
 
-                        <!-- Preview (hidden until file selected) -->
                         <div id="upload-preview" class="hidden w-full h-full relative">
                             <img id="preview-img" src="" alt="Preview foto bukti"
                                  class="w-full h-56 object-cover rounded-xl"/>
@@ -220,7 +201,6 @@
         </div>
     </main>
 
-    <!-- ─── Sticky Footer Submit ──────────────────────────────────────────────── -->
     <footer class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4 shadow-[0_-4px_16px_rgba(0,0,0,0.07)] z-40">
         <div class="max-w-3xl mx-auto">
             <button id="submit-btn" type="button" onclick="submitReport()"
@@ -231,14 +211,12 @@
         </div>
     </footer>
 
-    <!-- ─── Toast Notification ──────────────────────────────────────────────── -->
     <div id="toast"
          class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl text-white text-sm font-semibold min-w-[260px] max-w-sm">
         <span id="toast-icon" class="material-symbols-outlined text-[22px]"></span>
         <span id="toast-msg"></span>
     </div>
 
-    <!-- ─── Success Overlay ─────────────────────────────────────────────────── -->
     <div id="success-overlay" class="hidden fixed inset-0 z-50 bg-white dark:bg-background-dark flex flex-col items-center justify-center text-center px-8">
         <div class="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6">
             <span class="material-symbols-outlined text-green-500 !text-5xl">check_circle</span>
@@ -259,14 +237,11 @@
     </div>
 
     <script>
-        // ─── CSRF Token ───────────────────────────────────────────────────────────
-        // Laravel sets XSRF-TOKEN cookie; read it from cookies
         function getCsrfToken() {
             const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
             return match ? decodeURIComponent(match[1]) : '';
         }
 
-        // ─── Character Counters ───────────────────────────────────────────────────
         const titleInput = document.getElementById('title');
         const descInput  = document.getElementById('description');
 
@@ -284,7 +259,6 @@
             el.className = n >= 900 ? 'text-xs text-red-500 font-medium' : 'text-xs text-gray-400';
         });
 
-        // ─── Load Categories ──────────────────────────────────────────────────────
         async function loadCategories() {
             const skeleton = document.getElementById('category-skeleton');
             const select   = document.getElementById('category_id');
@@ -311,7 +285,6 @@
             }
         }
 
-        // ─── Photo Preview ────────────────────────────────────────────────────────
         const fileInput     = document.getElementById('evidence_photo');
         const dropZone      = document.getElementById('drop-zone');
         const placeholder   = document.getElementById('upload-placeholder');
@@ -348,7 +321,6 @@
         fileInput.addEventListener('change', () => showPreview(fileInput.files[0]));
         removePhotoBtn.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); clearPhoto(); });
 
-        // Drag & drop
         dropZone.addEventListener('dragover',  (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
         dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('drag-over'));
         dropZone.addEventListener('drop', (e) => {
@@ -356,7 +328,6 @@
             dropZone.classList.remove('drag-over');
             const file = e.dataTransfer.files[0];
             if (file) {
-                // Transfer to input
                 const dt = new DataTransfer();
                 dt.items.add(file);
                 fileInput.files = dt.files;
@@ -364,7 +335,6 @@
             }
         });
 
-        // ─── Toast Helper ─────────────────────────────────────────────────────────
         let toastTimer;
         function showToast(msg, type = 'error') {
             const toast   = document.getElementById('toast');
@@ -386,7 +356,6 @@
             toastTimer = setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        // ─── Validation ───────────────────────────────────────────────────────────
         function validate() {
             let ok = true;
 
@@ -409,7 +378,6 @@
             return ok;
         }
 
-        // ─── Submit ───────────────────────────────────────────────────────────────
         async function submitReport() {
             if (!validate()) return;
 
@@ -417,7 +385,6 @@
             const icon  = document.getElementById('submit-icon');
             const label = document.getElementById('submit-label');
 
-            // Loading state
             btn.disabled  = true;
             btn.classList.add('opacity-80', 'cursor-not-allowed');
             icon.innerHTML = `<svg class="spinner w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -448,7 +415,6 @@
                 const data = await res.json();
 
                 if (res.status === 422) {
-                    // Validation errors from server
                     const msgs = Object.values(data.errors || {}).flat();
                     showToast(msgs[0] || 'Data tidak valid.');
                     return;
@@ -456,7 +422,6 @@
 
                 if (!res.ok) throw new Error(data.message || 'Server error');
 
-                // ── Success ──
                 const complaintId = data.complaint_id;
                 document.getElementById('view-report-btn').href = `/student/report/${complaintId}`;
                 document.getElementById('success-overlay').classList.remove('hidden');
@@ -465,7 +430,6 @@
                 console.error('Submit error:', err);
                 showToast('Gagal mengirim laporan. Periksa koneksi dan coba lagi.');
             } finally {
-                // Reset button
                 btn.disabled = false;
                 btn.classList.remove('opacity-80', 'cursor-not-allowed');
                 icon.innerHTML = '';
@@ -474,7 +438,6 @@
             }
         }
 
-        // ─── Init ─────────────────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', loadCategories);
     </script>
 
