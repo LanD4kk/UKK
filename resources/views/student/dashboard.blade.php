@@ -154,16 +154,25 @@
         </div>
 
         <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 fade-in-delay-3">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Riwayat Laporan</h3>
-            <span id="complaint-count" class="text-xs text-gray-400 font-medium whitespace-nowrap"></span>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Riwayat Laporan</h3>
+                <span id="complaint-count" class="block text-xs text-gray-400 font-medium mt-1"></span>
+            </div>
+            
+            <div class="relative w-full sm:w-72">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
+                <input type="text" id="studentSearchInput" onkeyup="handleSearch()" class="w-full pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm transition-colors" placeholder="Cari laporan..."/>
+            </div>
         </div>
 
 
-        <div id="complaints-list" class="flex flex-col gap-4 mb-20">
+        <div id="complaints-list" class="flex flex-col gap-4 mb-6">
             <div class="skeleton h-20 w-full rounded-xl"></div>
             <div class="skeleton h-20 w-full rounded-xl"></div>
             <div class="skeleton h-20 w-full rounded-xl"></div>
         </div>
+        
+        <div id="pagination-controls" class="mb-24"></div>
 
         <div id="error-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
             <span class="material-symbols-outlined text-5xl text-red-400 mb-3">wifi_off</span>
@@ -223,22 +232,42 @@
             return map[category] ?? 'report';
         }
 
-        function renderComplaints(complaints) {
+        let globalComplaints = [];
+        let filteredComplaints = [];
+        let currentPage = 1;
+        const itemsPerPage = 5;
+
+        function handleSearch() {
+            const query = document.getElementById('studentSearchInput').value.toLowerCase();
+            filteredComplaints = globalComplaints.filter(c => {
+                return c.title.toLowerCase().includes(query) || 
+                       c.category.toLowerCase().includes(query) ||
+                       c.status.toLowerCase().includes(query);
+            });
+            currentPage = 1;
+            renderPaginatedComplaints();
+        }
+
+        function renderPaginatedComplaints() {
             const list = document.getElementById('complaints-list');
 
-            if (!complaints || complaints.length === 0) {
+            if (!filteredComplaints || filteredComplaints.length === 0) {
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-16 text-center">
                         <span class="material-symbols-outlined text-5xl text-gray-300 mb-3">inbox</span>
-                        <p class="text-gray-500 font-semibold">Belum ada laporan</p>
-                        <p class="text-gray-400 text-sm mt-1">Klik tombol <strong>Buat Laporan</strong> di bawah untuk memulai.</p>
+                        <p class="text-gray-500 font-semibold">Tidak ada laporan yang sesuai</p>
                     </div>`;
+                document.getElementById('complaint-count').textContent = `0 laporan`;
+                document.getElementById('pagination-controls').innerHTML = '';
                 return;
             }
 
-            document.getElementById('complaint-count').textContent = `${complaints.length} laporan`;
+            document.getElementById('complaint-count').textContent = `Total: ${filteredComplaints.length} laporan`;
 
-            list.innerHTML = complaints.map((c, i) => {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginated = filteredComplaints.slice(startIndex, startIndex + itemsPerPage);
+
+            list.innerHTML = paginated.map((c, i) => {
                 const icon = getCategoryIcon(c.category);
                 const badge = getStatusBadge(c.status);
                 const hasResponse = c.responses > 0;
@@ -272,6 +301,72 @@
                         </div>
                     </a>`;
             }).join('');
+
+            renderPaginationControls();
+        }
+
+        function renderPaginationControls() {
+            const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
+            const container = document.getElementById('pagination-controls');
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let buttons = '';
+            
+            // Prev button
+            buttons += `
+                <button onclick="changePage(${currentPage - 1})" 
+                        class="flex items-center justify-center w-8 h-8 rounded-lg ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed bg-gray-50 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors'}"
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                    <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                </button>
+            `;
+
+            for (let p = 1; p <= totalPages; p++) {
+                if (p === currentPage) {
+                    buttons += `
+                        <button class="w-8 h-8 rounded-lg bg-primary text-white font-bold text-sm shadow-md shadow-primary/30 flex items-center justify-center">
+                            ${p}
+                        </button>`;
+                } else {
+                    buttons += `
+                        <button onclick="changePage(${p})" 
+                                class="w-8 h-8 rounded-lg text-sm font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors flex items-center justify-center">
+                            ${p}
+                        </button>`;
+                }
+            }
+
+            // Next button
+            buttons += `
+                <button onclick="changePage(${currentPage + 1})" 
+                        class="flex items-center justify-center w-8 h-8 rounded-lg ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed bg-gray-50 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors'}"
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                    <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                </button>
+            `;
+
+            container.innerHTML = `<div class="flex items-center justify-center gap-2 mt-6">${buttons}</div>`;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredComplaints.length / itemsPerPage);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                renderPaginatedComplaints();
+                
+                // Only scroll up if we are lower down the page
+                const searchInput = document.getElementById('studentSearchInput');
+                if (searchInput) {
+                    const rect = searchInput.getBoundingClientRect();
+                    if (rect.top < 0) {
+                        searchInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
         }
 
         function renderUser(user) {
@@ -316,7 +411,11 @@
 
                 renderUser(data.user);
                 renderStats(data.stats);
-                renderComplaints(data.complaints);
+                
+                globalComplaints = data.complaints;
+                filteredComplaints = [...globalComplaints];
+                currentPage = 1;
+                renderPaginatedComplaints();
 
             } catch (err) {
                 console.error('Dashboard fetch error:', err);
