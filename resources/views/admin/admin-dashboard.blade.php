@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-6">
     <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Facility Overview</h2>
-    <p class="text-slate-500 mt-1">Status monitor for campus infrastructure</p>
+    <p class="text-slate-500 mt-1">Status monitor for school infrastructure</p>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
